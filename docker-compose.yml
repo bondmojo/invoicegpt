@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:15-alpine
+    container_name: invoicegpt_postgres
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: invoicegpt-devdb
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    #    networks:
+    #      - app-network
+    ports:
+      - "5432:5432" # Port mapping
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: invoicegpt_app
+    restart: always
+    environment:
+      DATABASE_HOST: db
+      DATABASE_PORT: 5432
+      DATABASE_USER: postgres
+      DATABASE_PASSWORD: postgres
+      DATABASE_NAME: invoicegpt-devdb
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+    #networks:
+    #  - app-network
+
+    #networks:
+    #  app-network:
+    #    driver: bridge
+
+volumes:
+  postgres_data:
