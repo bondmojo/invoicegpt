@@ -24,6 +24,7 @@
 
 ## Description
 
+Invoice GPT Backend, which allows user to upload the invoice Image directly into mysql Database
 [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
 
 ## Project setup
